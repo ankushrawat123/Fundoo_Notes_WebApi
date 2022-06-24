@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RepositoryLayer;
+using RepositoryLayer.Services;
 
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(FundooContext))]
-    [Migration("20220623101832_user")]
+    [Migration("20220624112259_user")]
     partial class user
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

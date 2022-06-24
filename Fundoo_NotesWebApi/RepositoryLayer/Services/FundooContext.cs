@@ -2,7 +2,7 @@
 using RepositoryLayer.Services.Entities;
 using System;
 
-namespace RepositoryLayer
+namespace RepositoryLayer.Services
 {
     public class FundooContext : DbContext
     {
