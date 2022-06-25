@@ -19,7 +19,7 @@ namespace Fundoo_NotesWebApi.Controllers
         IUserBL userBL;
         FundooContext fundooContext;
 
-        public UserController(IUserBL userBL, FundooContext fundooContext)
+        public UserController(IUserBL userBL,FundooContext fundooContext)
         {
             this.userBL = userBL;
             this.fundooContext = fundooContext;
@@ -29,13 +29,15 @@ namespace Fundoo_NotesWebApi.Controllers
         {
             try
             {
-                this.userBL.AddUser(userPostModel);
+                
                 var user = fundooContext.Users.FirstOrDefault(u => u.Email == userPostModel.Email);
                 if(user != null)
                 {
                     return this.BadRequest(new { success = false, message = "Email Already Exits" });
                 }
+                this.userBL.AddUser(userPostModel);
                 return this.Ok(new { success = true, message = "Registration Successfull" });
+                //when request get succeded we get 2oo 
             }
             catch(Exception e)
             {
