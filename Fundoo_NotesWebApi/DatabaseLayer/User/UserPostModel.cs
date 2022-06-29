@@ -16,7 +16,7 @@ namespace DatabaseLayer.User
         public string LastName { get; set; }
 
         [Required]
-        [RegularExpression("^[a-z A-Z 0-9]+([._#%+][a-z A-Z 0-9]+)?[@][a-z A-z]+[.][a-z A-Z]{2,3}([.][a-z]{2})?$", ErrorMessage = "Enter a Valid Email-Id")]
+        [RegularExpression("^[0-9a-zA-Z]+([+#%&_.-][a-zA-Z0-9]+)*[@][0-9]?[a-zA-Z]{2,}[.][a-zA-Z]{2,3}([.][a-zA-Z]{2,3})?$", ErrorMessage = "Enter a Valid Email-Id")]
         //- E.g. abc.xyz@bl.co.in
         public string Email { get; set; }
 
