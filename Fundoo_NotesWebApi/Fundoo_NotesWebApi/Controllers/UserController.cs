@@ -64,7 +64,7 @@ namespace Fundoo_NotesWebApi.Controllers
                 }
 
                 string token = this.userBL.LogInUser(email,password);
-                return this.Ok(new { success = true, message = "Log Successfull" });
+                return this.Ok(new { success = true, message = "Log Successfull",data= token });
                 //when request get succeded we get 2oo 
             }
             catch (Exception e)
