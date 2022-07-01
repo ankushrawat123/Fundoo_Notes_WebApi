@@ -1,6 +1,7 @@
 ﻿using BuisnessLayer.Interface;
 using DatabaseLayer.User;
 using RepositoryLayer.Interfaces;
+using RepositoryLayer.Services.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,6 +24,31 @@ namespace BuisnessLayer.Services
                await this.noteRL.AddNote(UserId,notePostModel);
             }
             catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task DeleteNote(int UserId, int NoteId)
+        {
+            try
+            {
+                await this.noteRL.DeleteNote(UserId,NoteId);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+
+        }
+
+        public async Task<List<Note>> GetAllNote(int UserId)
+        {
+            try
+            {
+                return await this.noteRL.GetAllNote(UserId);
+            }
+            catch(Exception e)
             {
                 throw e;
             }
