@@ -25,7 +25,7 @@ namespace RepositoryLayer.Services
         {
             this.fundooContext = fundooContext;
             this.configuration = configuration;
-                this._secret = configuration.GetSection("JwtConfig").GetSection("SecretKey").Value;
+            this._secret = configuration.GetSection("JwtConfig").GetSection("SecretKey").Value;
 
 
         }
@@ -88,7 +88,7 @@ namespace RepositoryLayer.Services
                     new Claim(ClaimTypes.Email, email),
                     new Claim("UserId", userId.ToString())
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(15),
+                    Expires = DateTime.UtcNow.AddMinutes(60),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
 
