@@ -27,15 +27,19 @@ namespace RepositoryLayer.Services
         {
             try
             {
-                var note = fundooContext.Notes.FirstOrDefault(u => u.UserId == userid && u.noteId == noteid);
-                if (note != null)
+
+                var label1 = await fundooContext.Labels.Where(c => c.UserId == userid && c.NoteId == noteid).FirstOrDefaultAsync();
+                if (label1 == null)
                 {
+                   
+
                     Label label = new Label();
+
                     label.UserId = userid;
                     label.NoteId = noteid;
                     label.LabelName = labelName;
-                 
-                     fundooContext.Labels.Add(label);
+                    
+                    await fundooContext.Labels.AddAsync(label);
                     await fundooContext.SaveChangesAsync();
                 }
             }
@@ -45,16 +49,37 @@ namespace RepositoryLayer.Services
             }
         }
 
+
+
+   
+
         public async Task DeleteLabel(int userid, int noteid)
         {
             try
             {
-                var label = fundooContext.Labels.Where(u=>u.UserId== userid && u.NoteId==noteid).FirstOrDefault();
-                if(label != null)
+                var label = fundooContext.Labels.Where(u => u.UserId == userid && u.NoteId == noteid).FirstOrDefault();
+                if (label != null)
                 {
                     fundooContext.Labels.Remove(label);
                     await fundooContext.SaveChangesAsync();
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<List<Label>> GetAllLabel(int userid)
+        {
+            try
+            {
+                var label = fundooContext.Labels.FirstOrDefault(u => u.UserId == userid );
+                if(label== null)
+                {
+                    return null;
+                }
+                return await fundooContext.Labels.ToListAsync();
             }
             catch(Exception e)
             {
@@ -66,9 +91,9 @@ namespace RepositoryLayer.Services
         {
             try
             {
-               return await fundooContext.Labels.FirstOrDefaultAsync(u => u.UserId == userid && u.NoteId == noteId);
+                return await fundooContext.Labels.FirstOrDefaultAsync(u => u.UserId == userid && u.NoteId == noteId);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -76,17 +101,17 @@ namespace RepositoryLayer.Services
 
         public async Task UpdateLabel(int userid, int noteId, string labelName)
         {
-           try
+            try
             {
-                var label = fundooContext.Labels.Where(u => u.NoteId == noteId).FirstOrDefault();
-                if(label!= null)
+                var label = fundooContext.Labels.Where(u => u.UserId == userid && u.NoteId == noteId).FirstOrDefault();
+                if (label != null)
                 {
-                 
+
                     label.LabelName = labelName;
                     await fundooContext.SaveChangesAsync();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }

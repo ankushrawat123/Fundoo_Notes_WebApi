@@ -7,7 +7,7 @@ using System.Text;
 
 namespace RepositoryLayer.Services.Entities
 {
-   
+   [Keyless]
     public class Label
     {
         [Required]
@@ -19,8 +19,10 @@ namespace RepositoryLayer.Services.Entities
         public int NoteId { get; set; }
 
         [Required]
-        [Key]
+     
         public string LabelName { get; set; }
 
+       
     }
+
 }

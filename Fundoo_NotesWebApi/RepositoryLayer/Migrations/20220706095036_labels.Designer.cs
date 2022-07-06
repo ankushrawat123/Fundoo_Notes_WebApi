@@ -10,7 +10,7 @@ using RepositoryLayer.Services;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(FundooContext))]
-    [Migration("20220705045303_labels")]
+    [Migration("20220706095036_labels")]
     partial class labels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,17 +23,19 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("RepositoryLayer.Services.Entities.Label", b =>
                 {
-                    b.Property<string>("LabelName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("NoteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("LabelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("labels");
+                    b.HasKey("UserId", "NoteId");
+
+                    b.ToTable("Labels");
                 });
 
             modelBuilder.Entity("RepositoryLayer.Services.Entities.Note", b =>
