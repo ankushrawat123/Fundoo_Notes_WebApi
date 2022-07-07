@@ -99,6 +99,13 @@ namespace Fundoo_NotesWebApi
 
             });
 
+
+            services.AddDistributedRedisCache(
+               options =>
+               {
+                   options.Configuration = "Localhost:6379";
+               }
+               );
             services.AddTransient<IUserBL,UserBL>();
             services.AddTransient<IUserRL, UserRL>();
             services.AddTransient<INoteBL,NoteBL>();
