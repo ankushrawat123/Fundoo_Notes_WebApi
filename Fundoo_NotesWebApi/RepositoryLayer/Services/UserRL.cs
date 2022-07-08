@@ -53,6 +53,7 @@ namespace RepositoryLayer.Services
         {
             try
             {
+               
                 var user = fundooContext.Users.Where(u => u.Email == Email).FirstOrDefault();
                 if (user!=null)
                 {

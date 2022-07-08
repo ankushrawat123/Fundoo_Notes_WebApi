@@ -1,4 +1,5 @@
 ﻿using BuisnessLayer.Interface;
+using DatabaseLayer.Label;
 using RepositoryLayer.Interfaces;
 using RepositoryLayer.Services;
 using RepositoryLayer.Services.Entities;
@@ -45,9 +46,9 @@ namespace BuisnessLayer.Services
         {
             try
             {
-               return await this.labelRL.GetAllLabel(userid);
+                return await this.labelRL.GetAllLabel(userid);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -58,6 +59,19 @@ namespace BuisnessLayer.Services
             try
             {
                 return await this.labelRL.GetLabel(userid, noteid);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        public async Task<List<LabelResponseModel>> GetLabel_Join(int userid)
+        {
+            try
+            {
+                return await this.labelRL.GetLabel_Join(userid);
             }
             catch (Exception e)
             {

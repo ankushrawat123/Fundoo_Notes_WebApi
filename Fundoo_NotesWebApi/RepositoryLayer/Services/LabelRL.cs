@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DatabaseLayer.Label;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RepositoryLayer.Interfaces;
 using RepositoryLayer.Services.Entities;
@@ -74,14 +75,14 @@ namespace RepositoryLayer.Services
         {
             try
             {
-                var label = fundooContext.Labels.FirstOrDefault(u => u.UserId == userid );
-                if(label== null)
+                var label = fundooContext.Labels.FirstOrDefault(u => u.UserId == userid);
+                if (label == null)
                 {
                     return null;
                 }
                 return await fundooContext.Labels.ToListAsync();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -98,6 +99,46 @@ namespace RepositoryLayer.Services
                 throw e;
             }
         }
+
+
+        public async Task<List<LabelResponseModel>> GetLabel_Join(int userid)
+        {
+            try
+            {
+
+                var label = fundooContext.Labels.FirstOrDefault(u => u.UserId == userid);
+                if (label == null)
+                {
+                    return null;
+                }
+                //return await fundooContext.Labels.ToListAsync();
+
+
+                // Get All Label By Linq Join query
+
+                return await fundooContext.Labels
+                    .Where(l => l.UserId == userid)
+                    .Join(fundooContext.Notes
+                    .Where(n => n.noteId == label.NoteId),
+                    l => l.NoteId,
+                    n => n.noteId,
+                    (l, n) => new LabelResponseModel
+                    {
+                        UserId = l.UserId,
+                        NoteId = n.noteId,
+                        Title = n.Title,
+                        Description = n.Description,
+                        LabelName = l.LabelName,
+
+                    }).ToListAsync();
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
         public async Task UpdateLabel(int userid, int noteId, string labelName)
         {
@@ -118,3 +159,19 @@ namespace RepositoryLayer.Services
         }
     }
 }
+
+//return await fundooContext.Labels
+//    .Where(l => l.UserId == userid)
+//    .Join(fundooContext.Notes      
+//    .Where(n => n.noteId == label.NoteId),
+//    l => l.NoteId,
+//    n => n.noteId,
+//    (l, n) => new LabelResponseModel
+//    {
+//        UserId = l.UserId,
+//        NoteId = n.noteId,
+//        Title = n.Title,
+//        Description = n.Description,
+//        LabelName = l.LabelName,
+
+//    }).ToListAsync();

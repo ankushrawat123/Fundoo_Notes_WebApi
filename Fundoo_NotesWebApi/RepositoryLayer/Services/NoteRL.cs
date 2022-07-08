@@ -39,7 +39,9 @@ namespace RepositoryLayer.Services
                 note.ModifiedDate = DateTime.Now;
                 fundooContext.Add(note);
                 await fundooContext.SaveChangesAsync();
+
             }
+
             catch (Exception e)
             {
                 throw e;

@@ -1,6 +1,8 @@
 ﻿using BuisnessLayer.Interface;
+using DatabaseLayer.Label;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RepositoryLayer.Services;
 using RepositoryLayer.Services.Entities;
 using System;
@@ -127,6 +129,7 @@ namespace Fundoo_NotesWebApi.Controllers
             }
         }
 
+
         [Authorize]
         [HttpGet("GetLabel/{noteId}")]
         public async Task<ActionResult> GetLabel(int noteId)
@@ -135,12 +138,12 @@ namespace Fundoo_NotesWebApi.Controllers
             {
                 var currentUser = HttpContext.User;
                 int UserId = Convert.ToInt32(currentUser.Claims.FirstOrDefault(c => c.Type == "UserId").Value);
-                var label= fundooContext.Labels.FirstOrDefault(x => x.UserId == UserId && x.NoteId == noteId);
+                var label = fundooContext.Labels.FirstOrDefault(x => x.UserId == UserId && x.NoteId == noteId);
                 if (label == null)
                 {
                     return this.BadRequest(new { success = false, Message = "Label Doesn't Exists" });
                 }
-             
+
                 var label1 = await this.labelBL.GetLabel(UserId, noteId);
                 return this.Ok(new { success = true, Message = $"Label Obtained Successfully for {label.LabelName}", data = label1 });
             }
@@ -158,10 +161,10 @@ namespace Fundoo_NotesWebApi.Controllers
             try
             {
                 var currentUser = HttpContext.User;
-                var UserId = Convert.ToInt32(currentUser.Claims.FirstOrDefault(c=>c.Type=="UserId").Value);   
-                
-                var label = fundooContext.Labels.FirstOrDefault(u=>u.UserId==UserId);
-                if(label == null)
+                var UserId = Convert.ToInt32(currentUser.Claims.FirstOrDefault(c => c.Type == "UserId").Value);
+
+                var label = fundooContext.Labels.FirstOrDefault(u => u.UserId == UserId);
+                if (label == null)
                 {
                     this.BadRequest(new { success = false, Message = "Label doesn't exist" });
                 }
@@ -169,10 +172,37 @@ namespace Fundoo_NotesWebApi.Controllers
                 labelList = await this.labelBL.GetAllLabel(UserId);
                 return Ok(new { success = true, Message = $"Note Obtained successfully ", data = labelList });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
         }
+
+
+        [Authorize]
+        [HttpGet("GetLabel_Join")]
+
+        public async Task<ActionResult> GetLabel_Join()
+        {
+            try
+            {
+                var currentUser = HttpContext.User;
+                var UserId = Convert.ToInt32(currentUser.Claims.FirstOrDefault(c => c.Type == "UserId").Value);
+
+                var label = fundooContext.Labels.FirstOrDefault(u => u.UserId == UserId);
+                if (label == null)
+                {
+                    this.BadRequest(new { success = false, Message = "Label doesn't exist" });
+                }
+                List<LabelResponseModel> labelList = new List<LabelResponseModel>();
+                labelList = await this.labelBL.GetLabel_Join(UserId);
+                return Ok(new { success = true, Message = $"Note Obtained successfully ", data = labelList });
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

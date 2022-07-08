@@ -1,4 +1,5 @@
 ﻿
+using DatabaseLayer.Label;
 using RepositoryLayer.Services.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,8 @@ namespace RepositoryLayer.Interfaces
         Task<Label> GetLabel(int userid, int noteId);
 
         Task<List<Label>> GetAllLabel(int userid);
+        Task<List<LabelResponseModel>> GetLabel_Join(int userid);
+
+
     }
 }
