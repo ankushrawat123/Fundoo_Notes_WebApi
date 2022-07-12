@@ -119,13 +119,13 @@ namespace RepositoryLayer.Services
                 return await fundooContext.Labels
                     .Where(l => l.UserId == userid)
                     .Join(fundooContext.Notes
-                    .Where(n => n.noteId == label.NoteId),
+                    .Where(n => n.UserId == label.UserId),
                     l => l.NoteId,
                     n => n.noteId,
                     (l, n) => new LabelResponseModel
                     {
                         UserId = l.UserId,
-                        NoteId = n.noteId,
+                        NoteId = l.NoteId,
                         Title = n.Title,
                         Description = n.Description,
                         LabelName = l.LabelName,

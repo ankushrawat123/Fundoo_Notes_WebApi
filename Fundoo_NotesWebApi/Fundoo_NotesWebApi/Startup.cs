@@ -114,6 +114,8 @@ namespace Fundoo_NotesWebApi
             services.AddTransient<INoteRL,NoteRL>();
             services.AddTransient<ILabelBL,LabelBL>();
             services.AddTransient<ILabelRL,LabelRL>();
+            services.AddTransient<ICollabBL,CollabBL>();
+            services.AddTransient<ICollabRL, CollabRL>();
         }
        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

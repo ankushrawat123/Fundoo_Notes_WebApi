@@ -105,7 +105,7 @@ namespace Fundoo_NotesWebApi.Controllers
         }
 
         [Authorize]
-        [HttpPut("UpdateLabel/{noteId}")]
+        [HttpPut("UpdateLabel/{noteId}/{LabelName}")]
 
         public async Task<ActionResult> UpdateLabel(int noteId, string LabelName)
         {
